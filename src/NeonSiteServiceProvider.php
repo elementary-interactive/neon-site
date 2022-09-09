@@ -29,6 +29,6 @@ class NeonSiteServiceProvider extends ServiceProvider
 
   public function register()
   {
-    $this->mergeConfigFrom(__DIR__.'/../config/neon-config.php', 'neon');
+    $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'neon-config');
   }
 }
