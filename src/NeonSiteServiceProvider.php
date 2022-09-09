@@ -2,7 +2,9 @@
 
 namespace Neon\Site;
 
+use \Illuminate\Support\Str;
 use \Illuminate\Support\ServiceProvider;
+use \Illuminate\Support\Facades\Storage;
 use \Illuminate\Contracts\Http\Kernel;
 
 class NeonSiteServiceProvider extends ServiceProvider
@@ -29,7 +31,9 @@ class NeonSiteServiceProvider extends ServiceProvider
 
   public function boot()
   {
-    if ($this->app->runningInConsole()) {
+    if ($this->app->runningInConsole())
+    {
+      Storage::put(__DIR__.'/../config/config.php', $Str::of(Storage::get(__DIR__.'/../config/config.php'))->replace('##uuid##', Str::uuid()));
 
       $this->publishes([
         __DIR__.'/../config/config.php'   => config_path('neon-config.php'),
