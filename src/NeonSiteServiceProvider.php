@@ -30,10 +30,10 @@ class NeonSiteServiceProvider extends ServiceProvider
   //   }
   // }
 
+    $kernel->pushMiddleware(SiteMiddleware::class);
+    
     if ($this->app->runningInConsole())
     {
-
-      $kernel->pushMiddleware(SiteMiddleware::class);
 
      
       // Storage::put(__DIR__.'/../config/config.php', Str::of(Storage::get(__DIR__.'/../config/config.php'))->replace('##uuid##', Str::uuid()));
