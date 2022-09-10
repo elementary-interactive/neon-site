@@ -6,6 +6,7 @@ use \Illuminate\Support\Str;
 use \Illuminate\Support\ServiceProvider;
 use \Illuminate\Support\Facades\Storage;
 use \Illuminate\Contracts\Http\Kernel;
+use \Neon\Site\Http\Middleware\SiteMiddleware;
 
 class NeonSiteServiceProvider extends ServiceProvider
 {
@@ -16,8 +17,8 @@ class NeonSiteServiceProvider extends ServiceProvider
    *
    * @return void
    */
-  // public function boot(Kernel $kernel): void
-  // {
+  public function boot(Kernel $kernel): void
+  {
   //   if ($this->app->runningInConsole()) {
       
   //     /** Export migrations.
@@ -29,15 +30,17 @@ class NeonSiteServiceProvider extends ServiceProvider
   //   }
   // }
 
-  public function boot()
-  {
     if ($this->app->runningInConsole())
     {
-      Storage::put(__DIR__.'/../config/config.php', Str::of(Storage::get(__DIR__.'/../config/config.php'))->replace('##uuid##', Str::uuid()));
 
-      $this->publishes([
-        __DIR__.'/../config/config.php'   => config_path('neon-config.php'),
-      ], 'neon-site-config');
+      $kernel->pushMiddleware(SiteMiddleware::class);
+
+     
+      // Storage::put(__DIR__.'/../config/config.php', Str::of(Storage::get(__DIR__.'/../config/config.php'))->replace('##uuid##', Str::uuid()));
+
+      // $this->publishes([
+      //   __DIR__.'/../config/config.php'   => config_path('neon-config.php'),
+      // ], 'neon-site-config');
 
     }
   }
