@@ -8,7 +8,7 @@ class SiteMiddleware
 {
     public function handle($request, Closure $next)
     {
-        dd($request);
+        dd($request->getHttpHost(), $request);
 
         return $next($request);
     }
