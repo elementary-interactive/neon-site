@@ -1,4 +1,4 @@
-<?phpS
+<?php
 
 namespace Neon\Site;
 
