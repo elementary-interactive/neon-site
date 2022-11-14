@@ -3,7 +3,6 @@
 namespace Neon\Site;
 
 use Illuminate\Support\Facades\Cache;
-use Neon\Site\Models\Site as SiteModel;
 
 class Site
 {
@@ -30,23 +29,8 @@ class Site
      */
     $this->class    = config('site.class');
 
+    // Fill up the sites...
     $this->boot();
-    // $this->sites    = ($this->driver === self::DRIVER_FILE) ? collect(config('site.hosts')) : SiteModel::all();
-    // $this->primaryKey = (new $this->class)->getKeyName();
-
-    // $this->sites->each(function($item, $key) use ($sites) {
-    //   if (!array_key_exists((new $this->class)->getKeyName(), (array) $item))
-    //   {
-    //     if (!is_a($item, $this->class))
-    //     {
-    //       $item = new $this->class($item);
-    //     }
-        
-    //     $item->{$this->{(new $this->class)->getKeyName()}} = $key;
-    //   }
-
-    //   return $item;
-    // });
   }
 
   private function boot()
