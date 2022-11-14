@@ -34,11 +34,11 @@ class NeonSiteServiceProvider extends ServiceProvider
     
     if ($this->app->runningInConsole())
     {
-      file_put_contents(__DIR__.'/../config/config.php', Str::of(file_get_contents(__DIR__.'/../config/config.php'))->replace('##uuid##', Str::uuid()));
+      // file_put_contents(__DIR__.'/../config/config.php', Str::of(file_get_contents(__DIR__.'/../config/config.php'))->replace('##uuid##', Str::uuid()));
       // Storage::put(__DIR__.'/../config/config.php', Str::of(Storage::get(__DIR__.'/../config/config.php'))->replace('##uuid##', Str::uuid()));
 
       $this->publishes([
-        __DIR__.'/../config/config.php'   => config_path('neon-config.php'),
+        __DIR__.'/../config/config.php'   => config_path('site.php'),
       ], 'neon-site-config');
 
     }
