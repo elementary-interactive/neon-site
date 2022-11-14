@@ -21,6 +21,7 @@ class Site
     $this->driver = config('site.driver');
     $this->sites = ($this->driver === 'file') ? collect(config('site.hosts')) : SiteModel::all();
     $this->class = config('site.class');
+    $this->primaryKey = (new $this->class)->getKeyName();
 
     $this->sites->each(function($item, $key) {
       if (!array_key_exists($this->primaryKey, (array) $item))

@@ -10,4 +10,6 @@ class Site extends Model
 {
   use Attributables;
   use Uuid;
+
+  protected $fillable = ['domains'];
 }
