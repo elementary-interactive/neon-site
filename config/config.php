@@ -1,7 +1,9 @@
 <?php
 
 return [
-  'driver'    => env('SITE_DRIVER', 'file'),
+  'driver' => env('SITE_DRIVER', 'file'),
+
+  'class' => \Neon\Site\Models\Site::class,
 
   'hosts' => [
     env('SITE_ID') => [
