@@ -11,7 +11,7 @@ class SiteMiddleware
     {
         
 
-        $site = Site::findOrDefault($request->getHttpHost());
+        $site = \Site::findOrDefault($request->getHttpHost());
 
         dd($request->getHttpHost(), $request, $site);
 
