@@ -39,7 +39,7 @@ class Site
   public function find($host)
   {
     $site = $this->sites->filter(function ($item, $key) use ($host) {
-      if (in_array($host, $item['domains'])) {
+      if (in_array($host, $item->domains)) {
         return true;
       }
     })

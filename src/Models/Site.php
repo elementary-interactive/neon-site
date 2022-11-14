@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Neon\Site\Models;
 
@@ -12,4 +12,13 @@ class Site extends Model
   use Uuid;
 
   protected $fillable = ['domains'];
+
+  /**
+   * The attributes that should be cast.
+   *
+   * @var array
+   */
+  protected $casts = [
+    'domains' => 'array',
+  ];
 }
