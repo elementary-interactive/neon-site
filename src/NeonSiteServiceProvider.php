@@ -34,7 +34,7 @@ class NeonSiteServiceProvider extends ServiceProvider
     
     if ($this->app->runningInConsole())
     {
-     
+      dd(Storage::get(__DIR__.'/../config/config.php'), Str::of(Storage::get(__DIR__.'/../config/config.php'))->replace('##uuid##', Str::uuid()));
       Storage::put(__DIR__.'/../config/config.php', Str::of(Storage::get(__DIR__.'/../config/config.php'))->replace('##uuid##', Str::uuid()));
 
       $this->publishes([
