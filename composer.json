@@ -23,7 +23,10 @@
     "laravel": {
       "providers": [
         "Neon\\Site\\NeonSiteServiceProvider"
-      ]
+      ],
+      "aliases": {
+        "Site": "Neon\\Site\\Facades\\Calculator"
+      }
     }
   },
   "require": {

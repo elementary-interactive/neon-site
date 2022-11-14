@@ -44,8 +44,11 @@ class NeonSiteServiceProvider extends ServiceProvider
     }
   }
 
-  // public function register()
-  // {
+  public function register()
+  {
+    $this->app->bind('site', function($app) {
+      return new Site();
+    });
   //   $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'neon-config');
-  // }
+  }
 }
