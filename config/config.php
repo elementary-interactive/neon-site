@@ -1,7 +1,9 @@
 <?php
 
 return [
+    'driver'    => env('SITE_DRIVER', 'file'),
+    
     env('SITE_ID', '##uuid##') => [
-        'domain'    => '*'
+        'domains'    => ['example.com']
     ]
 ];
