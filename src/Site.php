@@ -10,10 +10,14 @@ class Site
 
   private $sites = null;
 
+  private $site = null;
+
   public function __construct()
   {
+    /** Getting driver's value to know from where we should take the list of sites.
+     */
     $this->driver = config('site.driver');
-    $this->sites = ($this->engine === 'file') ? collect(config('site.hosts')) : SiteModel::all();
+    $this->sites = ($this->driver === 'file') ? collect(config('site.hosts')) : SiteModel::all();
   }
 
   public function find($host)
@@ -24,13 +28,33 @@ class Site
       }
     })->first();
 
-    return $site;
+    if (!is_null($site)) {
+      $this->site = $site;
+    }
+
+    return $this->current();
   }
 
   public function findOrDefault($host)
   {
     $site = $this->find($host);
 
-    return $site;
+    if (is_null($site))
+    {
+      /**
+       * @todo getting the default one.
+       */
+    }
+
+    if (!is_null($site)) {
+      $this->site = $site;
+    }
+
+    return $this->current();
+  }
+
+  public function current()
+  {
+    return $this->site;
   }
 }
