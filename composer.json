@@ -25,7 +25,7 @@
         "Neon\\Site\\NeonSiteServiceProvider"
       ],
       "aliases": {
-        "Site": "Neon\\Site\\Facades\\Calculator"
+        "Site": "Neon\\Site\\Facades\\Site"
       }
     }
   },
