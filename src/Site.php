@@ -28,7 +28,7 @@ class Site
       {
         if (!is_a($item, $this->class))
         {
-          $item = $this->class::create($item);
+          $item = new $this->class($item);
         }
         
         $item->{$this->primaryKey} = $key;
