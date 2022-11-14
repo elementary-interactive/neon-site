@@ -9,9 +9,11 @@ class SiteMiddleware
 {
     public function handle($request, Closure $next)
     {
-        dd($request->getHttpHost(), $request);
+        
 
-        NeonSiteService::where('host', $request->getHttpHost());
+        $site = Site::findOrDefault($request->getHttpHost());
+
+        dd($request->getHttpHost(), $request, $site);
 
         return $next($request);
     }

@@ -1,9 +1,14 @@
 <?php
 
 return [
-    'driver'    => env('SITE_DRIVER', 'file'),
-    
-    env('SITE_ID', '##uuid##') => [
-        'domains'    => ['example.com']
+  'driver'    => env('SITE_DRIVER', 'file'),
+
+  'hosts' => [
+    env('SITE_ID') => [
+      'domains'    => ['example.com']
+    ],
+    'dev' => [
+      'domains' => ['localhost']
     ]
+  ]
 ];
