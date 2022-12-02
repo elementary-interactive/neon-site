@@ -80,9 +80,12 @@ class Site
 
     if (is_null($site))
     {
-      /**
-       * @todo getting the default one.
-       */
+      $site = $this->sites->filter(function ($item, $key) {
+        if ($item->default === true) {
+          return true;
+        }
+      })
+        ->first();
     }
 
     if (!is_null($site)) {

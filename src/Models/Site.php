@@ -13,6 +13,15 @@ class Site extends Model
 
   protected $fillable = ['domains'];
 
+   /**
+   * The model's default values for attributes.
+   *
+   * @var array
+   */
+  protected $attributes = [
+    'default' => false,
+  ];
+
   /**
    * The attributes that should be cast.
    *
@@ -20,5 +29,16 @@ class Site extends Model
    */
   protected $casts = [
     'domains' => 'array',
+    'default' => 'boolean',
   ];
+
+  /**
+   * Bootstrap any application services.
+   *
+   * @return void
+   */
+  public function boot()
+  {
+      Model::preventLazyLoading(!$this->app->isProduction());
+  }
 }
