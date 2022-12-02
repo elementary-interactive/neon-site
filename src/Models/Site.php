@@ -37,7 +37,7 @@ class Site extends Model
    *
    * @return void
    */
-  public function boot()
+  public static function boot()
   {
       Model::preventLazyLoading(!$this->app->isProduction());
   }
