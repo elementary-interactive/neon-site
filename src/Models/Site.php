@@ -32,13 +32,4 @@ class Site extends Model
     'default' => 'boolean',
   ];
 
-  /**
-   * Bootstrap any application services.
-   *
-   * @return void
-   */
-  public static function boot()
-  {
-      Model::preventLazyLoading(!$this->app->isProduction());
-  }
 }
