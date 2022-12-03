@@ -11,7 +11,10 @@ class Site extends Model
   use Attributables;
   use Uuid;
 
-  protected $fillable = ['domains'];
+  protected $fillable = [
+    'domains',
+    'default'
+  ];
 
    /**
    * The model's default values for attributes.
