@@ -1,4 +1,3 @@
-// src/Console/SiteClearCommand.php
 <?php
 
 namespace Neon\Site\Console;
