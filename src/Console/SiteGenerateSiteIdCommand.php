@@ -6,7 +6,7 @@ namespace Neon\Site\Console;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 
-class SiteClearCommand extends Command
+class SiteGenerateSiteIdCommand extends Command
 {
   /**
    * @var string The command.

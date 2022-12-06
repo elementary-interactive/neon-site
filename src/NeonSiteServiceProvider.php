@@ -7,6 +7,8 @@ use \Illuminate\Support\ServiceProvider;
 use \Illuminate\Support\Facades\Storage;
 use \Illuminate\Contracts\Http\Kernel;
 use \Neon\Site\Http\Middleware\SiteMiddleware;
+use \Neon\Site\Console\SiteClearCommand;
+use \Neon\Site\Console\SiteGenerateSiteIdCommand;
 
 class NeonSiteServiceProvider extends ServiceProvider
 {
@@ -41,7 +43,11 @@ class NeonSiteServiceProvider extends ServiceProvider
         __DIR__.'/../config/config.php'   => config_path('site.php'),
       ], 'neon-site-config');
 
-    }
+      $this->commands([
+          SiteGenerateSiteIdCommand::class,
+          SiteClearCommand::class
+      ]);
+  }
   }
 
   public function register()
