@@ -40,8 +40,18 @@ class NeonSiteServiceProvider extends ServiceProvider
       // Storage::put(__DIR__.'/../config/config.php', Str::of(Storage::get(__DIR__.'/../config/config.php'))->replace('##uuid##', Str::uuid()));
 
       $this->publishes([
-        __DIR__.'/../config/config.php'   => config_path('site.php'),
-      ], 'neon-site-config');
+        __DIR__.'/../config/config_standalone.php'   => config_path('site.php'),
+      ], 'neon-site');
+
+      if (!class_exists('CreateSitesTable')) {
+        $this->publishes([
+          __DIR__ . '/../database/migrations/create_sites_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_sites_table.php'),
+          // you can add any number of migrations here
+        ], 'neon-site');
+      }
+      // $this->publishes([
+      //   __DIR__.'/../config/config_database.php'   => config_path('site.php'),
+      // ], 'neon-site-database');
 
       $this->commands([
           SiteGenerateSiteIdCommand::class,
