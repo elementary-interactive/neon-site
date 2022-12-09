@@ -17,12 +17,11 @@ class CreateSitesTable extends Migration
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            $table->uuid()
+            $table->uuid('id')
                 ->primary();
             $table->char('locale', 2)
                 ->index('ni_locale');
-            $table->json('domains')
-                ->index('ni_domains');
+            $table->json('domains');
             $table->softDeletes($column = 'deleted_at', $precision = 0)
                 ->index('ni_deleted_at');
             
