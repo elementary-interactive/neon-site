@@ -1,8 +1,8 @@
 <?php
 
-namespace Neon\Sites\Models\Traits;
+namespace Neon\Site\Models\Traits;
 
-use Neon\Sites\Models\Site;
+use Neon\Site\Models\Site;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /** 
