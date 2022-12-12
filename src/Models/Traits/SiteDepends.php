@@ -3,6 +3,8 @@
 namespace Neon\Site\Models\Traits;
 
 use Neon\Site\Models\Site;
+use Neon\Site\Models\SiteDepends as ModelsSiteDepends;
+use Neon\Site\Models\Scopes\SiteScope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /** 
@@ -14,9 +16,7 @@ trait SiteDepends
 {
   protected function initializeSiteDepends()
   {
-    $site_class = config('sites.class');
-    
-    $site_class::hasMany(self::class);
+    static::addGlobalScope(new SiteScope);
   }
 
   /** Get connected sites.
@@ -25,20 +25,6 @@ trait SiteDepends
    */
   public function site()
   {
-    return $this->belongsTo(Site::class);
-  }
-
-  /**
-   * Scope a query to only include site related objects.
-   *
-   * @param  \Illuminate\Database\Eloquent\Builder  $query
-   * @param mixed $site
-   * @return \Illuminate\Database\Eloquent\Builder
-   */
-  public function scopeOfType($query, $site)
-  {
-    return $query->with(['site' => function ($q) use ($site) {
-      $q->where('id', $site->id);
-    }])->get();
+    return $this->belongsToMany(config('site.class') ?? Site::class)->using(ModelsSiteDepends::class);
   }
 }
