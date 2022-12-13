@@ -53,7 +53,9 @@ class Site
         });
       }
 
-      Cache::put('neon-site', $this->sites);
+      if ($this->sites->count()) {
+        Cache::put('neon-site', $this->sites);
+      }
     }
     
   }
@@ -61,7 +63,7 @@ class Site
   public function find($host)
   {
     $site = $this->sites->filter(function ($item, $key) use ($host) {
-      if (in_array($host, $item->domains)) {
+      if (in_array($host, $item->domains) && $item->locale === app()->getLocale()) {
         return true;
       }
     })
