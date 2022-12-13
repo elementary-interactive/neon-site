@@ -17,8 +17,8 @@ class SiteScope implements Scope
    */
   public function apply(Builder $builder, Model $model)
   {
-    $builder->with(['site' => function ($q) {
-      $q->where('id', \Site::current()->id);
-    }]);
+    return $builder->whereHas('site', function ($query) {
+      $query->where('site_id', \Site::current()->id);
+    });
   }
 }

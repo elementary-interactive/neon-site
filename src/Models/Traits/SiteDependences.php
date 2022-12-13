@@ -25,7 +25,7 @@ trait SiteDependences
    */
   public function site()
   {
-    return $this->belongsToMany(config('site.class') ?? Site::class, 'site_dependences', 'site_id', 'dependence_id')
+    return $this->belongsToMany(config('site.class') ?? Site::class, 'site_dependences', 'dependence_id', 'site_id')
       ->wherePivot('dependence_type', self::class)
       ->using(SiteDependencesModel::class);
   }
