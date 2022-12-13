@@ -13,16 +13,16 @@ class CreateSitesPivot extends Migration
      */
     public function up()
     {
-        Schema::create('site_depends', function (Blueprint $table) {
+        Schema::create('site_dependences', function (Blueprint $table) {
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
 
             $table->uuid('site_id')
                 ->primary();
 
-            $table->uuid('model_id')
+            $table->uuid('dependence_id')
                 ->index();
-            $table->string('model_type')
+            $table->string('dependence_type')
                 ->index();
             $table->timestamps();
         });
@@ -35,6 +35,6 @@ class CreateSitesPivot extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('site_depends');
+        Schema::dropIfExists('site_dependences');
     }
 }

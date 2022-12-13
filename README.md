@@ -21,20 +21,22 @@ php artisan vendor:publish --provider=\"Neon\\Site\\NeonSiteServiceProvider\"
 ```
 
 ## Usage
-Just use the Trait like othes traits. Don't forget to use the `neon/model-uuid` trait too:
+If you want something, like a Menu, what is rlated to the Site, then you just have to use the dependency trait.
 ```php
 <?php
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Neon\Attributables\Models\Traits\Attributables;
+use Neon\Attributables\Models\Traits\Attributables; //- You cab check this too...
 use Neon\Models\Traits\Uuid;
+use Neon\Site\Models\Traits\SiteDependences;
 
 class AwesomeModel extends Model
 {
     use Attributables;
     use Uuid;
+    use SiteDependences;
 
     ...
 

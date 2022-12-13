@@ -3,7 +3,7 @@
 namespace Neon\Site\Models\Traits;
 
 use Neon\Site\Models\Site;
-use Neon\Site\Models\SiteDepends as ModelsSiteDepends;
+use Neon\Site\Models\SiteDependences as SiteDependecesModel;
 use Neon\Site\Models\Scopes\SiteScope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -12,9 +12,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * 
  * @author: Balázs Ercsey <balazs.ercsey@elementary-interactive.com>
  */
-trait SiteDepends
+trait SiteDependences
 {
-  protected function initializeSiteDepends()
+  protected function initializeSiteDependences()
   {
     static::addGlobalScope(new SiteScope);
   }
@@ -25,6 +25,8 @@ trait SiteDepends
    */
   public function site()
   {
-    return $this->belongsToMany(config('site.class') ?? Site::class)->using(ModelsSiteDepends::class);
+    return $this->belongsToMany(config('site.class') ?? Site::class, 'site_dependences', 'site_id', 'dependence_id')
+      ->wherePivot('dependce_type', self::class)
+      ->using(SiteDependencesModel::class);
   }
 }
