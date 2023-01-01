@@ -32,7 +32,8 @@
   "require": {
     "php": ">=8.0",
     "laravel/framework": ">=9.0",
-    "neon/model-uuid": "^1.0"
+    "neon/model-uuid": "^1.0",
+    "neon/model-cache-dev": "*"
   },
   "repositories": [],
   "branch-alias": {}
