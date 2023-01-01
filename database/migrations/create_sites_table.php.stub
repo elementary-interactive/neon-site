@@ -22,6 +22,8 @@ class CreateSitesTable extends Migration
             $table->char('locale', 2)
                 ->index('ni_locale');
             $table->json('domains');
+            $table->boolean('default')
+                ->default(false);
             $table->softDeletes($column = 'deleted_at', $precision = 0)
                 ->index('ni_deleted_at');
             
