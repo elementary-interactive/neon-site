@@ -35,7 +35,7 @@ class Site
 
   private function boot()
   {
-    if (Cache::has('neon-site') && config('site.cache'))
+    if (Cache::has('neon-site') && config('site.cache', true))
     {
       $this->sites = Cache::get('neon-site');
     } else {
