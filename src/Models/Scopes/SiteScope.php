@@ -17,7 +17,12 @@ class SiteScope implements Scope
    */
   public function apply(Builder $builder, Model $model)
   {
-    return $builder->whereHas('site', function ($query) {
+    /** Scope querying over not site but dependencies because if
+     * developer uses file drive for sites then the site-based
+     * querying will not work, as the site's object is not exists
+     * in the datbase only in memory.
+     */
+    return $builder->whereHas('dependencies', function ($query) {
       $query->where('site_id', \Site::current()->id);
     });
   }

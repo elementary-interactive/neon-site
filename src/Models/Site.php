@@ -12,6 +12,7 @@ class Site extends Model
   use Uuid;
 
   protected $fillable = [
+    'id',
     'domains',
     'default'
   ];

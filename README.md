@@ -30,13 +30,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Neon\Attributables\Models\Traits\Attributables; //- You cab check this too...
 use Neon\Models\Traits\Uuid;
-use Neon\Site\Models\Traits\SiteDependences;
+use Neon\Site\Models\Traits\SiteDependencies;
 
 class AwesomeModel extends Model
 {
     use Attributables;
     use Uuid;
-    use SiteDependences;
+    use SiteDependencies;
 
     ...
 

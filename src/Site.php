@@ -49,11 +49,14 @@ class Site
 
         $sites = collect(config('site.hosts'));
         $sites->each(function($item, $key) {
+          // Set the key.
+          $item[(new $this->class)->getKeyName()] = $key;
+          // Push to collection.
           $this->sites->push(new $this->class($item));
         });
       }
 
-      if ($this->sites->count()) {
+      if ($this->sites->count() && config('site.cache', true)) {
         Cache::put('neon-site', $this->sites);
       }
     }
