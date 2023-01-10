@@ -3,7 +3,6 @@
 namespace Neon\Site\Models\Traits;
 
 use Neon\Site\Models\Site;
-use Neon\Site\Models\SiteDependencies as SiteDependeciesModel;
 use Neon\Site\Models\Scopes\SiteScope;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -28,7 +27,7 @@ trait SiteDependencies
   {
     return $this->belongsToMany(config('site.class') ?? Site::class, 'site_dependencies', 'dependence_id', 'site_id')
       ->wherePivot('dependence_type', self::class)
-      ->using(SiteDependenciesModel::class);
+      ->using(\Neon\Site\Models\SiteDependencies::class);
   }
 
   /** Get connections to sites.
@@ -39,7 +38,7 @@ trait SiteDependencies
    */
   public function dependencies()
   {
-      return $this->belongsTo(SiteDependeciesModel::class, 'id', 'dependence_id')
+      return $this->belongsTo(\Neon\Site\Models\SiteDependencies::class, 'id', 'dependence_id')
         ->withDefault([
           'dependence_type' => self::class
         ]);
