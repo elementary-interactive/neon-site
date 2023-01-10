@@ -22,6 +22,8 @@ return [
    */
   'driver' => env('SITE_DRIVER', 'database'),
 
+  'cache' => true,
+
   /**
    * The class what will represent a site.
    */
