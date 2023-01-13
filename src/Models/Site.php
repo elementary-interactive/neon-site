@@ -3,6 +3,7 @@
 namespace Neon\Site\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Neon\Attributables\Models\Traits\Attributables;
 use Neon\Models\Traits\Uuid;
 
@@ -35,5 +36,10 @@ class Site extends Model
     'domains' => 'array',
     'default' => 'boolean',
   ];
+
+  public function getSlugAttribute()
+  {
+    return Str::slug($this->domains[0].'-'.$this->locale);
+  }
 
 }
