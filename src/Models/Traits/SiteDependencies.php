@@ -14,7 +14,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 trait SiteDependencies
 {
-  protected function initializeSiteDependencies()
+  /** Boot the Site dependency trait for a model.
+   * 
+   * @return void
+   */
+  public static function bootSiteDependencies()
   {
     static::addGlobalScope(new SiteScope);
   }
