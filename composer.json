@@ -1,6 +1,6 @@
 {
   "name": "neon/site",
-  "description": "Neon CMS' website handler.",
+  "description": "Neon CMS domain structure handler.",
   "version": "1.0.1",
   "type": "library",
   "license": "MIT",
