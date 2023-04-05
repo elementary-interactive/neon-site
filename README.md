@@ -34,7 +34,7 @@ use Neon\Site\Models\Traits\SiteDependencies;
 
 class AwesomeModel extends Model
 {
-    use Attributables;
+    use Attributable;
     use Uuid;
     use SiteDependencies;
 
