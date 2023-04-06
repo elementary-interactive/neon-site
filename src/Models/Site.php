@@ -4,12 +4,12 @@ namespace Neon\Site\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Neon\Attributables\Models\Traits\Attributables;
+use Neon\Attributable\Models\Traits\Attributable;
 use Neon\Models\Traits\Uuid;
 
 class Site extends Model
 {
-  use Attributables;
+  use Attributable;
   use Uuid;
 
   protected $fillable = [
