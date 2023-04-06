@@ -48,8 +48,8 @@ class NeonSiteServiceProvider extends ServiceProvider
 
       if (!class_exists('CreateSitesTable')) {
         $this->publishes([
-          __DIR__ . '/../database/migrations/create_sites_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_sites_table.php'),
-          __DIR__ . '/../database/migrations/create_sites_pivot.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_sites_pivot.php'),
+          __DIR__ . '/../database/migrations/create_sites_table.php.stub' => database_path('migrations/' . date('Y_m_d_Hi00', time()) . '_create_sites_table.php'),
+          __DIR__ . '/../database/migrations/create_sites_pivot.php.stub' => database_path('migrations/' . date('Y_m_d_Hi01', time()) . '_create_sites_pivot.php'),
         ], 'neon-site');
       }
 
