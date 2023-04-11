@@ -27,7 +27,7 @@ class Site
     /** 
      * @var string The name of the clas what represents site.
      */
-    $this->class    = config('site.class');
+    $this->class    = config('site.model');
 
     // Fill up the sites...
     $this->boot();
