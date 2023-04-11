@@ -16,6 +16,12 @@ class SiteClearCommand extends Command
 
   public final function handle()
   {
-    Cache::forget('neon-site');
+    if (config('site.cache'))
+    {
+      Cache::forget('neon-site');
+      $this->info('Cache flushed.');
+    } else {
+      $this->warn('Cache is turned off by the config.');
+    }
   }
 }
