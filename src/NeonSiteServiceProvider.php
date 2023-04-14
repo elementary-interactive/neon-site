@@ -63,7 +63,7 @@ class NeonSiteServiceProvider extends ServiceProvider
 
   public function register()
   {
-    $this->app->bind('site', function($app) {
+    $this->app->singleton('site', function($app) {
       return new Site();
     });
   }
