@@ -9,7 +9,7 @@ class SiteMiddleware
 {
     public function handle($request, Closure $next)
     {
-        \Site::findOrDefault($request->getHttpHost());
+        app('site')->findOrDefault($request->getHttpHost());
 
         return $next($request);
     }
