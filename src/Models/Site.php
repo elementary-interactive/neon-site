@@ -39,7 +39,7 @@ class Site extends Model
 
   public function getSlugAttribute()
   {
-    return Str::slug($this->domains[0].'-'.$this->locale);
+    return Str::slug(Arr::join($this->domains, '_').'-'.$this->locale);
   }
 
 }
