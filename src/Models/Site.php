@@ -3,6 +3,7 @@
 namespace Neon\Site\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Neon\Attributable\Models\Traits\Attributable;
 use Neon\Models\Traits\Uuid;
