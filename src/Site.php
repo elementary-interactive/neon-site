@@ -17,6 +17,8 @@ class Site
 
   private $site = null;
 
+  private $protected = false;
+
   public function __construct()
   {
     /** Getting driver's value to know from where we should take the list of sites.
@@ -63,6 +65,11 @@ class Site
     
   }
 
+  public function protect(bool $protected = false)
+  {
+    $this->protected = $protected;
+  }
+
   public function find($host)
   {
     $site = $this->sites->filter(function ($item, $key) use ($host) {
@@ -72,7 +79,7 @@ class Site
     })
       ->first();
 
-    if (!is_null($site)) {
+    if (!is_null($site) && !$this->protected) {
       $this->site = $site;
     }
 
@@ -93,7 +100,7 @@ class Site
         ->first();
     }
 
-    if (!is_null($site)) {
+    if (!is_null($site) && !$this->protected) {
       $this->site = $site;
     }
 
