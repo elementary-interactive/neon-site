@@ -16,6 +16,7 @@ class Site extends Model
   protected $fillable = [
     'id',
     'domains',
+    'prefixes',
     'default'
   ];
 
@@ -34,8 +35,9 @@ class Site extends Model
    * @var array
    */
   protected $casts = [
-    'domains' => 'array',
-    'default' => 'boolean',
+    'domains'   => 'array',
+    'prefixes'  => 'array',
+    'default'   => 'boolean',
   ];
 
   public function getSlugAttribute()

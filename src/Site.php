@@ -65,15 +65,10 @@ class Site
     
   }
 
-  public function protect(bool $protected = false)
+  public function findByPrefix($prefix)
   {
-    $this->protected = $protected;
-  }
-
-  public function find($host)
-  {
-    $site = $this->sites->filter(function ($item, $key) use ($host) {
-      if (in_array($host, $item->domains) && $item->locale === app()->getLocale()) {
+    $site = $this->sites->filter(function ($item, $key) use ($prefix) {
+      if (is_array($item->prefixes) && in_array($prefix, $item->prefixes) && $item->locale === app()->getLocale()) {
         return true;
       }
     })
@@ -86,9 +81,30 @@ class Site
     return $this->current();
   }
 
-  public function findOrDefault($host)
+  public function findByDomain($host)
   {
-    $site = $this->find($host);
+    $site = $this->sites->filter(function ($item, $key) use ($host) {
+      if (is_array($item->domains) && in_array($host, $item->domains) && $item->locale === app()->getLocale()) {
+        return true;
+      }
+    })
+      ->first();
+
+    if (!is_null($site) && !$this->protected) {
+      $this->site = $site;
+    }
+
+    return $this->current();
+  }
+
+  public function findOrDefault($host, $prefix = '')
+  {
+    $site = $this->findByPrefix($prefix);
+
+    if (is_null($site))
+    {
+      $site = $this->findByDomain($host);
+    }
 
     if (is_null($site))
     {
