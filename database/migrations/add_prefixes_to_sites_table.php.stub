@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddLabelToSitesTable extends Migration
+class AddPrefixesToSitesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,7 +16,6 @@ class AddLabelToSitesTable extends Migration
         Schema::table('sites', function (Blueprint $table) {
             $table->json('prefixes')
                 ->nullable()
-                ->default('[]')
                 ->after('domains');
         });
     }

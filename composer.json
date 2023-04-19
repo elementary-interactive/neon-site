@@ -1,7 +1,7 @@
 {
   "name": "neon/site",
   "description": "Neon CMS' website handler.",
-  "version": "1.0.11",
+  "version": "1.0.13",
   "type": "library",
   "license": "MIT",
   "authors": [
