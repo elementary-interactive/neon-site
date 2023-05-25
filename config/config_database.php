@@ -27,7 +27,7 @@ return [
   /**
    * The class what will represent a site.
    */
-  'class' => \Neon\Site\Models\Site::class,
+  'model' => \Neon\Site\Models\Site::class,
 
   /**
    * List of the sites.
