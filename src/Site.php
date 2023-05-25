@@ -68,7 +68,7 @@ class Site
   public function findByPrefix($prefix)
   {
     $site = $this->sites->filter(function ($item, $key) use ($prefix) {
-      if (is_array($item->prefixes) && in_array($prefix, $item->prefixes) && $item->locale === app()->getLocale()) {
+      if (is_array($item->prefixes) && in_array($prefix, $item->prefixes)) {
         return true;
       }
     })
@@ -84,7 +84,7 @@ class Site
   public function findByDomain($host)
   {
     $site = $this->sites->filter(function ($item, $key) use ($host) {
-      if (is_array($item->domains) && in_array($host, $item->domains) && $item->locale === app()->getLocale()) {
+      if (is_array($item->domains) && in_array($host, $item->domains)) {
         return true;
       }
     })
