@@ -19,13 +19,18 @@ class CreateSitesTable extends Migration
 
             $table->uuid('id')
                 ->primary();
+            $table->string('title');
+            $table->string('slug');
+            $table->json('domains');
             $table->char('locale', 2)
                 ->index('ni_locale');
-            $table->json('domains');
             $table->boolean('default')
                 ->default(false);
+
             $table->softDeletes($column = 'deleted_at', $precision = 0)
                 ->index('ni_deleted_at');
+
+            $table->unique(['slug', 'locale']);
             
             $table->timestamps();
         });

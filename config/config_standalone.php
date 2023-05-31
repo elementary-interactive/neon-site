@@ -44,8 +44,10 @@ return [
    */
   'hosts' => [
     env('SITE_ID') => [
-      'domains' => ['example.com'],
+      'domains' => ['localhost', 'example.com'],
       'locale'  => 'en',
+      'slug'    => 'default',
+      'title'   => 'Default',
       'default' => true
     ],
     'dev' => [

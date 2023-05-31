@@ -32,7 +32,7 @@ class NeonSiteServiceProvider extends ServiceProvider
   //   }
   // }
 
-    $kernel->pushMiddleware(SiteMiddleware::class);
+    // $kernel->pushMiddleware(SiteMiddleware::class);
     
     if ($this->app->runningInConsole())
     {
