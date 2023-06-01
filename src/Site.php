@@ -20,6 +20,10 @@ class Site
 
   private $site = null;
 
+  private $locales = null;
+
+  private $locale = null;
+
   public function __construct()
   {
     /** Getting driver's value to know from where we should take the list of sites.
@@ -31,6 +35,11 @@ class Site
      * @var string The name of the clas what represents site.
      */
     $this->model    = config('site.model');
+
+    /** 
+     * @var array The available locales.
+     */
+    $this->locales = config('site.available_locales');
 
     // Fill up the sites...
     $this->boot();
@@ -98,10 +107,12 @@ class Site
     return $this->current();
   }
   
-  public function findBySlug($slug)
+  public function find($slug)
   {
-    $site = $this->sites->filter(function ($item, $key) use ($slug) {
-      if ($item->slug === $slug)//&& $item->locale === app()->getLocale())
+    $locale = $this->locale;
+
+    $site = $this->sites->filter(function ($item, $key) use ($slug, $locale) {
+      if (($item->slug === $slug) && (is_null($locale) || $item->locale === $locale))
       {
         return true;
       }
@@ -117,11 +128,7 @@ class Site
 
   public function findOrDefault($slug)
   {
-    // $site = $this->findByPrefix($prefix);
-
-    // if (is_null($site)) {
-      $site = $this->findBySlug($slug);
-    // }
+    $site = $this->find($slug);
 
     if (is_null($site)) {
       $site = $this->sites->filter(function ($item, $key) {
@@ -154,6 +161,25 @@ class Site
     {
       Route::pattern($site->slug, $site->pattern);
     }
+  }
+
+  public function setLocale($locale = null)
+  {
+    if (empty($locale) || !is_string($locale))
+    {
+      $locale = request()->segment(1);
+    }
+
+    if (!array_key_exists($locale, $this->locales))
+    {
+      $locale = config('app.locale');
+    }
+
+    $this->locale = $locale;
+    
+    app()->setLocale($locale);
+
+    return $locale;
   }
 
   public function domain(string $slug, bool $needKey = false): array|string

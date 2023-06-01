@@ -29,7 +29,7 @@ return [
    */
   'model' => \Neon\Site\Models\Site::class,
 
-    /**
+  /**
    * List of the sites.
    * - The site's ID will be used as primary key value for site related contents.
    * - Possible arguments:
@@ -53,5 +53,13 @@ return [
     'dev' => [
       'domains' => []
     ]
-  ]
+  ],
+
+  /** Available locales for the contents and for the routing.
+   * 
+   */
+  'available_locales' => [
+    'hu'  => ['hu-HU', 'magyar', 'hungarian'],
+    'en'  => ['en-EN', 'english', 'english'],
+  ],
 ];
