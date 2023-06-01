@@ -41,6 +41,7 @@ class Site
     if (Cache::has('neon-site') && config('site.cache', true)) {
       $this->sites = Cache::get('neon-site');
     } else {
+
       if ($this->driver === self::DRIVER_DATABASE) {
         $this->sites = $this->model::all();
       }
@@ -60,22 +61,6 @@ class Site
         Cache::put('neon-site', $this->sites);
       }
     }
-  }
-
-  public function findByPrefix($prefix)
-  {
-    $site = $this->sites->filter(function ($item, $key) use ($prefix) {
-      if (is_array($item->prefixes) && in_array($prefix, $item->prefixes)) {
-        return true;
-      }
-    })
-      ->first();
-
-    if (!is_null($site)) {
-      $this->site = $site;
-    }
-
-    return $this->current();
   }
 
   public function findByDomain($host)
@@ -116,7 +101,7 @@ class Site
   public function findBySlug($slug)
   {
     $site = $this->sites->filter(function ($item, $key) use ($slug) {
-      if ($item->slug === $slug && $item->locale === app()->getLocale())
+      if ($item->slug === $slug)//&& $item->locale === app()->getLocale())
       {
         return true;
       }
@@ -171,16 +156,21 @@ class Site
     }
   }
 
-  public function domain(string $slug, bool $withoutKey = false): array|string
+  public function domain(string $slug, bool $needKey = false): array|string
   {
-    return $this->group('domain', $slug, $withoutKey);
+    return $this->group('domain', $slug, $needKey);
+  }
+
+  public function prefix(string $slug, bool $needKey = false): array|string
+  {
+    return $this->group('prefix', $slug, $needKey);
   }
 
   /** Creating group value for Laravel routing
    *
    */
-  private function group(string $key, string $value, bool $withoutKey = false): array|string
+  private function group(string $key, string $value, bool $needKey = false): array|string
   {
-    return ($withoutKey === true) ? "{{$value}}" : [$key => "{{$value}}"];
+    return ($needKey === true) ? [$key => "{{$value}}"] : "{{$value}}";
   }
 }

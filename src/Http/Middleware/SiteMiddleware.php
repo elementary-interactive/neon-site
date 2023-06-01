@@ -3,33 +3,26 @@
 namespace Neon\Site\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Neon\Site\NeonSiteServiceProvider;
 
 class SiteMiddleware
 {
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        dump(func_get_args());
-        dump($request->route('domain'));
-        dump('Hello handler, very default');
-        // app('site')->findOrDefault($request->getHttpHost(), $request->segment(1));
+        /** Patterns will help to find easily the Site what we should use now...
+         * @var array $pattern Array of used patterns.
+         */
+        $patterns = array_keys(array_intersect_key($request->route()->parameters(), Route::getPatterns()));
+
+        if (count($patterns) === 1)
+        {
+            app('site')->findOrDefault($patterns[0]);
+        } else {
+            throw new \Exception('Too many patterns');
+        }
 
         return $next($request);
-    }
-
-    public static function domain($slug)
-    {
-        app('site')->findOrDefault($slug);
-    }
-
-    public static function prefix($prefix)
-    {
-        dump('Hello, should check prefix: '.request()->segment(1), $prefix      );
-    }
-
-    public static function locale()
-    {
-        dump('Hello, should check locale: '.request()->segment(1));
     }
 }
