@@ -21,6 +21,59 @@ php artisan vendor:publish --provider=\"Neon\\Site\\NeonSiteServiceProvider\"
 ```
 
 ## Usage
+
+Site Middleware as of 2.0 does not add automatically to the array of middleware, so, if you want to use it, you should set up that for the routing:
+
+```php
+use Neon\Site\Facades\Site;
+
+
+Site::patterns();
+```
+
+This command will define the Site rules for Laravel's router. After this definition you can use it for different cases:
+
+```php
+use Neon\Site\Facades\Site;
+use Neon\Site\Http\Middleware\SiteMiddleware;
+
+Route::group([
+    'domain'      => Site::domain('domain_slug'),
+    'middleware'  => SiteMiddleware::class
+  ], function () {
+
+  Route::group([
+    'prefix'      => Site::setLocale(),
+    'middleware'  => [SiteMiddleware::class]
+  ], function () {
+
+    Route::get('/', function() {
+      echo 'Hello '.app('site')->current()->locale.' /// DOMAIN';
+    });
+  });
+});
+```
+
+If you want to separate routing by locale you can use it like this:
+
+```php
+    'prefix'      => Site::setLocale('en'),
+```
+
+You can also use site as prefixes:
+
+```php
+ Route::group([
+    'prefix'      => Site::prefix('prefix_slug'),
+    'middleware'  => SiteMiddleware::class
+  ], function () {
+  
+  ...
+});
+```
+
+### Site dependent models
+
 If you want something, like a Menu, what is rlated to the Site, then you just have to use the dependency trait.
 ```php
 <?php
