@@ -40,9 +40,8 @@ class Site extends Model
     'default'   => 'boolean',
   ];
 
-  public function getSlugAttribute()
+  public function getPatternAttribute()
   {
-    return Str::slug(Arr::join($this->domains, '_').'-'.$this->locale);
+    return '('.implode('|', $this->domains).')';
   }
-
 }

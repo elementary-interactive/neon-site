@@ -32,7 +32,7 @@ class NeonSiteServiceProvider extends ServiceProvider
   //   }
   // }
 
-    $kernel->pushMiddleware(SiteMiddleware::class);
+    // $kernel->pushMiddleware(SiteMiddleware::class);
     
     if ($this->app->runningInConsole())
     {
@@ -49,9 +49,10 @@ class NeonSiteServiceProvider extends ServiceProvider
       if (!class_exists('CreateSitesTable')) {
         $this->publishes([
           __DIR__ . '/../database/migrations/create_sites_table.php.stub'           => database_path('migrations/' . date('Y_m_d_', time()) . '000001_create_sites_table.php'),
+        ], 'neon-site');
+      if (!class_exists('CreateSitesPivot')) {
+        $this->publishes([
           __DIR__ . '/../database/migrations/create_sites_pivot.php.stub'           => database_path('migrations/' . date('Y_m_d_', time()) . '000002_create_sites_pivot.php'),
-          __DIR__ . '/../database/migrations/add_label_to_sites_table.php.stub'     => database_path('migrations/' . date('Y_m_d_', time()) . '000003_add_label_to_sites_table.php'),
-          __DIR__ . '/../database/migrations/add_prefixes_to_sites_table.php.stub'  => database_path('migrations/' . date('Y_m_d_', time()) . '000004_add_prefixes_to_sites_table.php'),
         ], 'neon-site');
       }
 

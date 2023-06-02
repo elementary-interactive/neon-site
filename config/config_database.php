@@ -45,5 +45,13 @@ return [
   'hosts' => [
     env('SITE_ID') => [
     ]
-  ]
+  ],
+
+  /** Available locales for the contents and for the routing.
+   * 
+   */
+  'available_locales' => [
+    'hu'  => ['hu-HU', 'magyar', 'hungarian'],
+    'en'  => ['en-EN', 'english', 'english'],
+  ],
 ];
