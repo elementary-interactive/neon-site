@@ -21,9 +21,15 @@ class CreateSitesTable extends Migration
                 ->primary();
             $table->string('title');
             $table->string('slug');
+            $table->string('favicon')
+                ->nullable();
+                ->default(null);
             $table->json('domains');
             $table->char('locale', 2)
                 ->index('ni_locale');
+            $table->text('robots')
+                ->nullable()
+                ->default(null)
             $table->boolean('default')
                 ->default(false);
 
