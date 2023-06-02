@@ -63,15 +63,30 @@ If you want to separate routing by locale you can use it like this:
 You can also use site as prefixes:
 
 ```php
- Route::group([
+use Neon\Site\Facades\Site;
+use Neon\Site\Http\Middleware\SiteMiddleware;
+
+Route::group([
     'prefix'      => Site::prefix('prefix_slug'),
     'middleware'  => SiteMiddleware::class
   ], function () {
-  
   ...
 });
 ```
 
+### SEO functions
+
+#### Use favicon
+
+Favicon could be set on admin UI. After that, yo can easily put it into the header right after the `<title>` tag:
+
+```html
+<head>
+  <title>...</title>
+  <x-neon-favicon/>
+  ...
+</head>
+```
 ### Site dependent models
 
 If you want something, like a Menu, what is rlated to the Site, then you just have to use the dependency trait.
