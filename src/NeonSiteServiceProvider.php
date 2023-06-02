@@ -50,17 +50,25 @@ class NeonSiteServiceProvider extends ServiceProvider
         $this->publishes([
           __DIR__ . '/../database/migrations/create_sites_table.php.stub'           => database_path('migrations/' . date('Y_m_d_', time()) . '000001_create_sites_table.php'),
         ], 'neon-site');
+      }
+
       if (!class_exists('CreateSitesPivot')) {
         $this->publishes([
           __DIR__ . '/../database/migrations/create_sites_pivot.php.stub'           => database_path('migrations/' . date('Y_m_d_', time()) . '000002_create_sites_pivot.php'),
         ], 'neon-site');
       }
 
+      $this->loadViewComponentsAs('neon', [
+        Favicon::class,
+      ]);
+  
+      $this->loadViewsFrom(__DIR__ . '/../resources/views/components', 'neon');
+
       $this->commands([
           SiteGenerateSiteIdCommand::class,
           SiteClearCommand::class
       ]);
-  }
+    }
   }
 
   public function register()
