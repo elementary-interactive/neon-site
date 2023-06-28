@@ -30,7 +30,7 @@ trait SiteDependencies
   public function site()
   {
     return $this->belongsToMany(config('site.model') ?? Site::class, 'site_dependencies', 'dependence_id', 'site_id')
-      ->wherePivot('dependence_type', self::class)
+      ->wherePivot('dependence_type', 'LIKE', addslashes(self::class))
       ->using(\Neon\Site\Models\SiteDependencies::class);
   }
 
