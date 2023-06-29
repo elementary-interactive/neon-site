@@ -62,6 +62,8 @@ class NeonSiteServiceProvider extends ServiceProvider
 
   public function register()
   {
+    $this->loadViewsFrom(__DIR__ . '/../resources/views/components', 'neon');
+    
     $this->app->singleton('site', function($app) {
       return new Site();
     });
