@@ -32,9 +32,9 @@
   },
   "require": {
     "php": ">=8.0",
-    "laravel/framework": ">=9.0",
+    "laravel/framework": "^10.0",
     "neon/model-uuid": "^1.0",
-    "neon/attributable": "^1.0"
+    "neon/attributable": "*"
   },
   "repositories": [],
   "branch-alias": {}
