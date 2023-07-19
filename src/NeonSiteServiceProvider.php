@@ -2,13 +2,14 @@
 
 namespace Neon\Site;
 
-use \Illuminate\Support\Str;
-use \Illuminate\Support\ServiceProvider;
-use \Illuminate\Support\Facades\Storage;
-use \Illuminate\Contracts\Http\Kernel;
-use \Neon\Site\Http\Middleware\SiteMiddleware;
-use \Neon\Site\Console\SiteClearCommand;
-use \Neon\Site\Console\SiteGenerateSiteIdCommand;
+use Illuminate\Support\Str;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Http\Kernel;
+use Neon\Site\Http\Middleware\SiteMiddleware;
+use Neon\Site\Console\SiteClearCommand;
+use Neon\Site\Console\SiteGenerateSiteIdCommand;
+use Neon\Site\View\Components\Favicon;
 
 class NeonSiteServiceProvider extends ServiceProvider
 {
@@ -21,7 +22,12 @@ class NeonSiteServiceProvider extends ServiceProvider
    */
   public function boot(Kernel $kernel): void
   {
-    // $kernel->pushMiddleware(SiteMiddleware::class);
+    
+    $this->loadViewComponentsAs('neon', [
+      Favicon::class,
+    ]);
+
+    $this->loadViewsFrom(__DIR__ . '/../resources/views/components', 'neon');
     
     if ($this->app->runningInConsole())
     {
@@ -47,12 +53,6 @@ class NeonSiteServiceProvider extends ServiceProvider
         ], 'neon-migrations');
       }
 
-      $this->loadViewComponentsAs('neon', [
-        Favicon::class,
-      ]);
-  
-      $this->loadViewsFrom(__DIR__ . '/../resources/views/components', 'neon');
-
       $this->commands([
           SiteGenerateSiteIdCommand::class,
           SiteClearCommand::class
@@ -63,7 +63,7 @@ class NeonSiteServiceProvider extends ServiceProvider
   public function register()
   {
     $this->loadViewsFrom(__DIR__ . '/../resources/views/components', 'neon');
-    
+
     $this->app->singleton('site', function($app) {
       return new Site();
     });
