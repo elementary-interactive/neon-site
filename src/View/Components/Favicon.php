@@ -1,6 +1,6 @@
 <?php
 
-namespace Neon\View\Components;
+namespace Neon\Site\View\Components;
 
 use Illuminate\View\Component;
 use Illuminate\Support\Facades\View;
@@ -10,14 +10,11 @@ class Favicon extends Component
   /**
    * Create the component instance.
    *
-   * @param  \Neon\Services\MenuService $service
-   * @param  string  $id
-   * 
    * @return void
    */
   public function __construct()
   {
-    parent::__construct();
+    // parent::__construct();
   }
 
   /**
