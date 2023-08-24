@@ -39,7 +39,7 @@ class Site
     /** 
      * @var array The available locales.
      */
-    $this->locales = config('site.available_locales');
+    $this->locales  = config('site.available_locales');
 
     // Fill up the sites...
     $this->boot();
@@ -72,50 +72,33 @@ class Site
     }
   }
 
-  public function findByDomain($host)
+  public function findByDomain($host = '*')
   {
-    // $site = $this->sites->filter(function ($item, $key) use ($host) {
-    //   $need = false;
-    //   $domains = '';
+    return $this->sites->filter(function ($item, $key) use ($host) {
+      $need     = false;
 
-    //   if (is_array($item->domains)) {
-    //     foreach ($item->domains as $key => $domain) {
-    //       $item->domains[$key] = addslashes($domain);
-    //     }
-    //   }
+      $domains = (is_array($item->domains)  && !empty($item->domains)) ? implode('|', $item->domains) : $item->domains;
 
-    //   $domains = (is_array($item->domains)) ? implode('|', $item->domains) : $item->domains;
+      if (!Str::of($domains)->startsWith('/')) {
+        $domains = "/{$domains}/im";
+      }
 
+      $match = (Str::of($domains)->startsWith('/')) ? Str::of($host)->match($domains) : $host;
 
-    //   if (!Str::of($domains)->startsWith('/')) {
-    //     $domains = "/{$domains}/";
-    //   }
+      if ($host == $match) {
+        $need = true;
+      }
 
-    //   $match = (Str::of($domain)->startsWith('/')) ? Str::of($host)->match($domain) : $domain;
-    //   if ($host == $match) {
-    //     $need = true;
-    //   }
-
-    //   return $need;
-    // })
-    //   ->first();
-
-    // if (!is_null($site)) {
-    //   $this->site = $site;
-    // }
-
-    return $this->current();
+      return $need;
+    });
   }
   
   public function find($slug)
   {
     $locale = $this->locale;
 
-    $site = $this->sites->filter(function ($item, $key) use ($slug, $locale) {
-      if (($item->slug === $slug) && (is_null($locale) || $item->locale === $locale))
-      {
-        return true;
-      }
+    $site = $this->findByDomain(request()->domain ?: 'localhost')->filter(function ($item, $key) use ($slug, $locale) {
+      return ($item->slug === $slug && (is_null($locale) || $item->locale === $locale));
     })
       ->first();
 
@@ -172,7 +155,7 @@ class Site
 
     if (!array_key_exists($locale, $this->locales))
     {
-      $locale = config('app.locale');
+      $locale = config('site.default_locale');
     }
 
     $this->locale = $locale;

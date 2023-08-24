@@ -23,7 +23,7 @@ class SiteScope implements Scope
      * in the datbase only in memory.
      */
     return $builder->whereHas('dependencies', function ($query) {
-      $query->where('site_id', \Site::current()->id);
+      $query->where('site_id', app('site')->current()?->id);
     });
   }
 }
