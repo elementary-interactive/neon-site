@@ -43,7 +43,6 @@ Route::group([
   ], function () {
 
   Route::group([
-    'prefix'      => Site::setLocale(),
     'middleware'  => [SiteMiddleware::class]
   ], function () {
 
@@ -57,7 +56,7 @@ Route::group([
 If you want to separate routing by locale you can use it like this:
 
 ```php
-    'prefix'      => Site::setLocale('en'),
+    'prefix'      => 'en',
 ```
 
 You can also use site as prefixes:

@@ -39,7 +39,7 @@ class Site
     /** 
      * @var array The available locales.
      */
-    $this->locales = config('site.available_locales');
+    $this->locales  = config('site.available_locales');
 
     // Fill up the sites...
     $this->boot();
@@ -98,7 +98,7 @@ class Site
     $locale = $this->locale;
 
     $site = $this->findByDomain(request()->domain ?: 'localhost')->filter(function ($item, $key) use ($slug, $locale) {
-      return (is_null($locale) || $item->locale === $locale);
+      return ($item->slug === $slug && (is_null($locale) || $item->locale === $locale));
     })
       ->first();
 
@@ -155,7 +155,7 @@ class Site
 
     if (!array_key_exists($locale, $this->locales))
     {
-      $locale = config('app.locale');
+      $locale = config('site.default_locale');
     }
 
     $this->locale = $locale;
