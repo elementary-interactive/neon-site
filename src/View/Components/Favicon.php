@@ -25,7 +25,7 @@ class Favicon extends Component
   public function render()
   {
     return view('neon::favicon', [
-      'icon' => app('site')->current()->favicon,
+      'icon' => app('site')->current()?->favicon,
     ]);
   }
 }
