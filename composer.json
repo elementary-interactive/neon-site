@@ -36,6 +36,14 @@
     "neon/model-uuid": "^1.0",
     "neon/attributable": "*"
   },
+  "require-dev": {
+    "pestphp/pest": "*"
+  },
   "repositories": [],
-  "branch-alias": {}
+  "branch-alias": {},
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
 }
