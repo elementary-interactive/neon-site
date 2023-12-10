@@ -12,11 +12,11 @@ class SiteClearCommand extends Command
    */
   protected $signature = 'site:clear';
 
-  protected $description = 'Clear Neon\' site cache.';
+  protected $description = 'Clear Neon\'s site cache.';
 
   public final function handle()
   {
-    if (config('site.cache'))
+    if (config('neon-site.cache'))
     {
       Cache::forget('neon-site');
       $this->info('Cache flushed.');
