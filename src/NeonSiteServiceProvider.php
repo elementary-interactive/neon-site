@@ -2,68 +2,41 @@
 
 namespace Neon\Site;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Contracts\Http\Kernel;
-use Neon\Site\Http\Middleware\SiteMiddleware;
 use Neon\Site\Console\SiteClearCommand;
-use Neon\Site\Console\SiteGenerateSiteIdCommand;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Spatie\LaravelPackageTools\Package;
 use Neon\Site\View\Components\Favicon;
+use Spatie\LaravelPackageTools\Commands\InstallCommand;
 
-class NeonSiteServiceProvider extends ServiceProvider
+class NeonSiteServiceProvider extends PackageServiceProvider
 {
-
-  /** Bootstrap any application services.
-   *
-   * @param \Illuminate\Contracts\Http\Kernel  $kernel
-   *
-   * @return void
-   */
-  public function boot(Kernel $kernel): void
-  {
-    
-    $this->loadViewComponentsAs('neon', [
-      Favicon::class,
-    ]);
-
-    $this->loadViewsFrom(__DIR__ . '/../resources/views/components', 'neon');
-    
-    if ($this->app->runningInConsole())
+    public function configurePackage(Package $package): void
     {
-      // file_put_contents(__DIR__.'/../config/config.php', Str::of(file_get_contents(__DIR__.'/../config/config.php'))->replace('##uuid##', Str::uuid()));
-      // Storage::put(__DIR__.'/../config/config.php', Str::of(Storage::get(__DIR__.'/../config/config.php'))->replace('##uuid##', Str::uuid()));
-
-      $this->publishes([
-        __DIR__.'/../config/config_standalone.php'   => config_path('site.php'),
-      ], 'neon-configs');
-      // $this->publishes([
-      //   __DIR__.'/../config/config_database.php'   => config_path('site.php'),
-      // ], 'neon-site-database');
-
-      if (!class_exists('CreateSitesTable')) {
-        $this->publishes([
-          __DIR__ . '/../database/migrations/create_sites_table.php.stub'           => database_path('migrations/' . date('Y_m_d_', time()) . '000001_create_sites_table.php'),
-        ], 'neon-migrations');
-      }
-
-      if (!class_exists('CreateSitesPivot')) {
-        $this->publishes([
-          __DIR__ . '/../database/migrations/create_sites_pivot.php.stub'           => database_path('migrations/' . date('Y_m_d_', time()) . '000002_create_sites_pivot.php'),
-        ], 'neon-migrations');
-      }
-
-      $this->commands([
-          SiteGenerateSiteIdCommand::class,
-          SiteClearCommand::class
-      ]);
+        $package
+            ->name('neon-site')
+            // ->hasConfigFile()
+            ->hasViews()
+            ->hasViewComponent('neon', Favicon::class)
+            // ->sharesDataWithAllViews('downloads', 3)
+            // ->hasTranslations()
+            // ->hasAssets()
+            // ->publishesServiceProvider('site')
+            // ->hasRoute('web')
+            ->hasMigration('create_sites_table')
+            ->hasCommand(SiteClearCommand::class);
+            // ->hasInstallCommand(function(InstallCommand $command) {
+            //     $command
+            //         ->publishConfigFile()
+            //         ->publishAssets()
+            //         ->publishMigrations()
+            //         ->copyAndRegisterServiceProviderInApp()
+            //         ->askToStarRepoOnGitHub();
+            // });
     }
-  }
 
-  public function register()
+    
+  public function packageRegistered()
   {
-    $this->loadViewsFrom(__DIR__ . '/../resources/views/components', 'neon');
-
     $this->app->singleton('site', function($app) {
       return new Site();
     });
