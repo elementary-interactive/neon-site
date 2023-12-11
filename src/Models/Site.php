@@ -7,10 +7,11 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Neon\Attributable\Models\Traits\Attributable;
 use Neon\Models\Traits\Uuid;
+use Neon\Site\Models\Interfaces\Site as SiteInterface;
 
-class Site extends Model
+class Site extends Model implements SiteInterface
 {
-  use Attributable;
+  // use Attributable;
   use Uuid;
 
   protected $fillable = [
@@ -43,5 +44,15 @@ class Site extends Model
   public function getPatternAttribute()
   {
     return '('.implode('|', $this->domains).')';
+  }
+
+  public function getDomainPattern(): string
+  {
+
+  }
+
+  public function getPrefixPattern(): string
+  {
+
   }
 }
