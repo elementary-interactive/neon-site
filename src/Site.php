@@ -34,15 +34,13 @@ class Site
 
   private function boot()
   {
-    if (Cache::has('neon-site') && config('neon-site.cache', true))
-    {
+    if (Cache::has('neon-site') && config('neon-site.cache', true)) {
       $this->sites = Cache::get('neon-site');
     } else {
       // Store all sites to cache.
       $this->sites = $this->model::all();
-      
-      if ($this->sites?->count() && config('neon-site.cache', true))
-      {
+
+      if ($this->sites?->count() && config('neon-site.cache', true)) {
         Cache::put('neon-site', $this->sites);
       }
     }
@@ -69,7 +67,7 @@ class Site
       if ($host == $match && $item->locale == app()->getLocale()) {
         $need = true;
       }
-    
+
       return $need;
     })?->first();
   }
@@ -99,7 +97,7 @@ class Site
       if ($prefix == $match && $item->locale == app()->getLocale()) {
         $need = true;
       }
-    
+
       return $need;
     })?->first();
   }
@@ -107,7 +105,7 @@ class Site
   public function findOrDefault(Request $request)
   {
     $site = $this->findByDomain($request->host()) ?: $this->findByPrefix(Route::current()->getPrefix());
-    
+
     /** If site can't find by domain neither prefix, we just getting the default
      * one. Locale also should match.
      */
@@ -129,6 +127,9 @@ class Site
 
   public function current()
   {
+    if (!$this->site) {
+      $this->findOrDefault(request());
+    }
     return $this->site;
   }
 }
