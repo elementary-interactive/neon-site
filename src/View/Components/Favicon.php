@@ -14,7 +14,6 @@ class Favicon extends Component
    */
   public function __construct()
   {
-    // parent::__construct();
   }
 
   /**
@@ -24,7 +23,7 @@ class Favicon extends Component
    */
   public function render()
   {
-    return view('neon::favicon', [
+    return view('neon-site::components.favicon', [
       'icon' => app('site')->current()?->favicon,
     ]);
   }

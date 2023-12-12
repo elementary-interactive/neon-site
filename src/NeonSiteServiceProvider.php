@@ -22,22 +22,9 @@ class NeonSiteServiceProvider extends PackageServiceProvider
       ->name('neon-site')
       ->hasConfigFile()
       ->hasViews()
-      ->hasViewComponent('neon', Favicon::class)
-      // ->sharesDataWithAllViews('downloads', 3)
-      // ->hasTranslations()
-      // ->hasAssets()
-      // ->publishesServiceProvider('site')
-      // ->hasRoute('web')
+      ->hasViewComponent('neon-site', Favicon::class)
       ->hasMigration('create_sites_table')
       ->hasCommands([SiteClearCommand::class]);
-    // ->hasInstallCommand(function(InstallCommand $command) {
-    //     $command
-    //         ->publishConfigFile()
-    //         ->publishAssets()
-    //         ->publishMigrations()
-    //         ->copyAndRegisterServiceProviderInApp()
-    //         ->askToStarRepoOnGitHub();
-    // });
   }
 
 
