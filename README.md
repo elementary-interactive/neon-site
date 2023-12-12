@@ -5,73 +5,48 @@ Handles sites to be able to run on it.
 * `"neon/model-uuid": "^1.0"`
 
 ## Install
+
 Easily install the composer package:
+
 ```bash
 composer require neon/site
 ```
-Then there are two ways to use the site: You can store your settings both in config file or in database. It depends on your wishes, you can install package on both ways.
 
-### Install config files
+Then there are two ways to use the site: You can store your settings both in config file or in database. It depends on your wishes, you can install package on both ways.
 
 ### Install database migrations
 
 Then you should install database migrations by:
 ```bash
-php artisan vendor:publish --provider=\"Neon\\Site\\NeonSiteServiceProvider\"
+php artisan vendor:publish --tag=neon-site-migrations
 ```
 
 ## Usage
 
-Site Middleware as of 2.0 does not add automatically to the array of middleware, so, if you want to use it, you should set up that for the routing:
+Usage is so simply because of the Site handler stuff, what recognizes the domain or the prefix to determine the current Site object.
 
+### Site dependent models
+
+If you want something, like a Menu, what is rlated to the Site, then you just have to use the dependency trait.
 ```php
-use Neon\Site\Facades\Site;
+<?php
 
+namespace App\Models;
 
-Site::patterns();
+use Illuminate\Database\Eloquent\Model;
+use Neon\Models\Traits\Uuid;
+use Neon\Site\Models\Traits\SiteDependencies;
+
+class AwesomeModel extends Model
+{
+    use Uuid;
+    use SiteDependencies;
+
+    ...
+
+}
 ```
-
-This command will define the Site rules for Laravel's router. After this definition you can use it for different cases:
-
-```php
-use Neon\Site\Facades\Site;
-use Neon\Site\Http\Middleware\SiteMiddleware;
-
-Route::group([
-    'domain'      => Site::domain('domain_slug'),
-    'middleware'  => SiteMiddleware::class
-  ], function () {
-
-  Route::group([
-    'middleware'  => [SiteMiddleware::class]
-  ], function () {
-
-    Route::get('/', function() {
-      echo 'Hello '.app('site')->current()->locale.' /// DOMAIN';
-    });
-  });
-});
-```
-
-If you want to separate routing by locale you can use it like this:
-
-```php
-    'prefix'      => 'en',
-```
-
-You can also use site as prefixes:
-
-```php
-use Neon\Site\Facades\Site;
-use Neon\Site\Http\Middleware\SiteMiddleware;
-
-Route::group([
-    'prefix'      => Site::prefix('prefix_slug'),
-    'middleware'  => SiteMiddleware::class
-  ], function () {
-  ...
-});
-```
+The trait will automatically add the scope to the given model, so, when you querying for the given model records, it will always select those ones what are depends on the current site.
 
 ### SEO functions
 
@@ -86,32 +61,6 @@ Favicon could be set on admin UI. After that, yo can easily put it into the head
   ...
 </head>
 ```
-### Site dependent models
-
-If you want something, like a Menu, what is rlated to the Site, then you just have to use the dependency trait.
-```php
-<?php
-
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-use Neon\Attributable\Models\Traits\Attributable; //- You cab check this too...
-use Neon\Models\Traits\Uuid;
-use Neon\Site\Models\Traits\SiteDependencies;
-
-class AwesomeModel extends Model
-{
-    use Attributable;
-    use Uuid;
-    use SiteDependencies;
-
-    ...
-
-}
-```
-<!-- ## How It Works?
-
-It's so easy basically. The "variables", a.k.a. attributes stored in database in the `attributes` table. -->
 
 ## License
 
