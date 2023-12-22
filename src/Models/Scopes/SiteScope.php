@@ -22,8 +22,8 @@ class SiteScope implements Scope
      * querying will not work, as the site's object is not exists
      * in the datbase only in memory.
      */
-    return $builder->whereHas('dependencies', function ($query) {
-      $query->where('site_id', app('site')->current()?->id);
+    return $builder->whereHas('site', function ($query) {
+      $query->where('id', app('site')->current()?->id);
     });
   }
 }
