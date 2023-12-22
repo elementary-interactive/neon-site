@@ -2,16 +2,19 @@
 
 namespace Neon\Site\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Masterminds\HTML5\Exception as HTML5Exception;
 use Neon\Attributable\Models\Traits\Attributable;
 use Neon\Models\Traits\Uuid;
 use Neon\Site\Models\Interfaces\Site as SiteInterface;
 
 class Site extends Model implements SiteInterface
 {
-  // use Attributable;
+  use Attributable;
+  use SoftDeletes;
   use Uuid;
 
   /**
@@ -21,9 +24,12 @@ class Site extends Model implements SiteInterface
    */
   protected $fillable = [
     'id',
+    'title',
+    'slug',
     'domains',
     'prefixes',
-    'default'
+    'locale',
+    'is_default'
   ];
 
   /**
@@ -41,10 +47,24 @@ class Site extends Model implements SiteInterface
    * @var array
    */
   protected $casts = [
-    'domains'   => 'array',
-    'prefixes'  => 'array',
-    'default'   => 'boolean',
+    'title'       => 'string',
+    'slug'        => 'string',
+    'domains'     => 'array',
+    'prefixes'    => 'array',
+    'is_default'  => 'boolean',
   ];
+
+  public function setlocaleAttribute($locale)
+  {
+    if (class_exists(\Mcamara\LaravelLocalization\LaravelLocalization::class) && !in_array($locale, \Mcamara\LaravelLocalization::getSupportedLanguagesKeys()))
+    {
+      throw new \Neon\Site\Exceptions\NotSupportedLocale($locale);
+    }
+    else
+    {
+      $this->attributes['locale'] = $locale;
+    }
+  }
 
   /**
    * @return string
