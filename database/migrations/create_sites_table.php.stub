@@ -25,12 +25,13 @@ class CreateSitesTable extends Migration
                 ->nullable()
                 ->default(null);
             $table->json('domains');
+            $table->json('prefixes');
             $table->char('locale', 2)
                 ->index('ni_locale');
             $table->text('robots')
                 ->nullable()
                 ->default(null);
-            $table->boolean('default')
+            $table->boolean('is_default')
                 ->default(false);
 
             $table->softDeletes($column = 'deleted_at', $precision = 0)
