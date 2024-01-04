@@ -38,7 +38,7 @@ class Site extends Model implements SiteInterface
    * @var array
    */
   protected $attributes = [
-    'default' => false,
+    'is_default' => false,
   ];
 
   /**
@@ -56,15 +56,31 @@ class Site extends Model implements SiteInterface
 
   public function setlocaleAttribute($locale)
   {
-    if (class_exists(\Mcamara\LaravelLocalization\LaravelLocalization::class) && !in_array($locale, \Mcamara\LaravelLocalization::getSupportedLanguagesKeys()))
-    {
-      throw new \Neon\Site\Exceptions\NotSupportedLocale($locale);
-    }
-    else
-    {
+    // if (class_exists(\Mcamara\LaravelLocalization\LaravelLocalization::class) && !in_array($locale, \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLanguagesKeys()))
+    // {
+    //   throw new \Neon\Site\Exceptions\NotSupportedLocale($locale);
+    // }
+    // else
+    // {
       $this->attributes['locale'] = $locale;
-    }
+    // }
   }
+
+  // /**
+  //  * @return array
+  //  */
+  // public function getDomainsAttribute(): array
+  // {
+  //   return explode(',', $this->attributes['domains']);
+  // }
+
+  /**
+   */
+  // public function setDomainsAttribute($domains): array
+  // {
+  //   dd($domains);
+  //   return explode(',', $this->attributes['domains']);
+  // }
 
   /**
    * @return string
