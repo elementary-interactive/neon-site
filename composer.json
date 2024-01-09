@@ -1,7 +1,7 @@
 {
   "name": "neon/site",
   "description": "Neon CMS' website handler.",
-  "version": "2.0.5",
+  "version": "3.0.0-alpha-1",
   "type": "library",
   "license": "MIT",
   "authors": [
@@ -38,27 +38,14 @@
     "spatie/laravel-package-tools": "^1.14.0",
     "illuminate/contracts": "^10.0"
   },
-  "require-dev": {
-    "laravel/pint": "^1.0",
-    "nunomaduro/collision": "^7.8",
-    "larastan/larastan": "^2.0.1",
-    "orchestra/testbench": "^8.8",
-    "pestphp/pest": "^2.20",
-    "pestphp/pest-plugin-arch": "^2.0",
-    "pestphp/pest-plugin-laravel": "^2.0",
-    "phpstan/extension-installer": "^1.1",
-    "phpstan/phpstan-deprecation-rules": "^1.0",
-    "phpstan/phpstan-phpunit": "^1.0",
-    "spatie/laravel-ray": "^1.26"
-  },
   "repositories": [],
   "branch-alias": {},
   "config": {
     "allow-plugins": {
-      "pestphp/pest-plugin": true,
+      "pestphp/pest-plugin": false,
       "phpstan/extension-installer": true
     }
   },
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": false
 }
