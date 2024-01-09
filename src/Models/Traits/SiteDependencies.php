@@ -28,7 +28,7 @@ trait SiteDependencies
    */
   public function site()
   {
-    return $this->belongsTo(config('site.model') ?? Site::class);
+    return $this->morphToMany(config('site.model') ?? Site::class, 'site_dependencies');
   }
 
   // /** Get connections to sites.

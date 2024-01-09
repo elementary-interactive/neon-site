@@ -56,38 +56,24 @@ class Site extends Model implements SiteInterface
 
   public function setlocaleAttribute($locale)
   {
-    // if (class_exists(\Mcamara\LaravelLocalization\LaravelLocalization::class) && !in_array($locale, \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLanguagesKeys()))
-    // {
-    //   throw new \Neon\Site\Exceptions\NotSupportedLocale($locale);
-    // }
-    // else
-    // {
+    if (class_exists(\Mcamara\LaravelLocalization\LaravelLocalization::class) && !in_array($locale, \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLanguagesKeys()))
+    {
+      throw new \Neon\Site\Exceptions\NotSupportedLocale($locale);
+    }
+    else
+    {
       $this->attributes['locale'] = $locale;
-    // }
+    }
   }
 
-  // /**
-  //  * @return array
-  //  */
-  // public function getDomainsAttribute(): array
-  // {
-  //   return explode(',', $this->attributes['domains']);
-  // }
-
-  /**
-   */
-  // public function setDomainsAttribute($domains): array
-  // {
-  //   dd($domains);
-  //   return explode(',', $this->attributes['domains']);
-  // }
-
-  /**
+  /** Getting the regex pattern what may match to the given domain.
+   * 
    * @return string
    */
   public function getDomainPattern(): string
   {
-    $domains = (is_array($this->domains)  && !empty($this->domains)) ? implode('|', $this->domains) : $this->domains;
+    $domains = (is_array($this->domains)  && !empty($this->domains)) ? implode('|', $this->domains) : '.';
+
     if (!Str::of($domains)->startsWith('/')) {
       $domains = "/{$domains}/im";
     }
@@ -95,8 +81,7 @@ class Site extends Model implements SiteInterface
     return $domains;
   }
 
-  /** Getting the prefix pattern of the site. This is used Site Middleware, what
-   * recognizes the Site where we are and helps to find in the database.
+  /** Getting the prefix pattern of the site. 
    * 
    * @return string
    */
