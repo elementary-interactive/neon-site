@@ -12,7 +12,7 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 
 class NeonSiteServiceProvider extends PackageServiceProvider
 {
-  const VERSION = '3.0.0';
+  const VERSION = '3.0.0-alpha-4';
 
   public function configurePackage(Package $package): void
   {
@@ -24,6 +24,7 @@ class NeonSiteServiceProvider extends PackageServiceProvider
       ->hasViews()
       ->hasViewComponent('neon-site', Favicon::class)
       ->hasMigration('create_sites_table')
+      ->hasMigration('create_site_dependencies_table')
       ->hasCommands([SiteClearCommand::class]);
   }
 
