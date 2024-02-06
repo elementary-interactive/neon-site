@@ -28,7 +28,7 @@ trait SiteDependencies
    */
   public function site(): \Illuminate\Database\Eloquent\Relations\MorphToMany
   {
-    return $this->morphToMany(config('site.model') ?? Site::class, 'site_dependencies')
+    return $this->morphToMany(config('site.model') ?? Site::class, 'dependence')
       ->withTimestamps();
   }
 

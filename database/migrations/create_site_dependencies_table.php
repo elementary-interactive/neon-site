@@ -19,8 +19,7 @@ return new class extends Migration
 
             $table->uuid('site_id')
                 ->index();
-            $table->uuidMorphs('dependence')
-                ->index();
+            $table->uuidMorphs('dependence', 'dependence_index');
 
             $table->timestamps();
         });
@@ -35,4 +34,4 @@ return new class extends Migration
     {
         Schema::dropIfExists('site_dependencies');
     }
-}
+};
