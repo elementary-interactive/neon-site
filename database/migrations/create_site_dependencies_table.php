@@ -17,11 +17,12 @@ return new class extends Migration
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_unicode_ci';
 
-            $table->uuid('site_id')
-                ->index();
-            $table->uuidMorphs('dependence', 'dependence_index');
+            $table->uuid('site_id');
+            $table->uuidMorphs('site_dependency', 'dependence_index');
 
             $table->timestamps();
+
+            $table->foreign('site_id')->references('id')->on('sites');
         });
     }
 
