@@ -16,7 +16,7 @@ class NeonSiteServiceProvider extends PackageServiceProvider
 
   public function configurePackage(Package $package): void
   {
-    AboutCommand::add('Neon', 'Site', self::VERSION);
+    AboutCommand::add('N30N', 'Site', self::VERSION);
 
     $package
       ->name('neon-site')

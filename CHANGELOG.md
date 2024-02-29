@@ -20,6 +20,7 @@ Theoretically, the new Site methodology does not control or limit anything relat
 ### Additions
 
 - SiteInterface with two methods: `getDomainPattern()` and `getPrefixPattern()` what must be implementend in the model what is representing a site. (By default it is `Neon\Site\Models\Site` class.)
+- Using Spatie's Laravel Package Tools.
 - PEST test environment added.
 
 ## [2.0.5] ... [1.0.0] 
