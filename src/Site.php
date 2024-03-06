@@ -83,7 +83,7 @@ class Site
    * 
    * @see doc
    */
-  public function findByPrefix(string $prefix)
+  public function findByPrefix(string|null $prefix = null)
   {
     return $this->sites->filter(function ($item, $key) use ($prefix) {
       $need     = false;
