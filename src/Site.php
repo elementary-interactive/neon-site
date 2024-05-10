@@ -110,19 +110,16 @@ class Site
      * one. Locale also should match.
      */
     if (is_null($site)) {
-      $site = $this->sites->filter(function ($item, $key) {
+      $this->site = $this->sites->filter(function ($item, $key) {
         if ($item->default === true && $item->locale == app()->getLocale()) {
           return true;
         }
-      })
-        ->first();
-    }
-
-    if (!is_null($site)) {
+      })->first();
+    } else {
       $this->site = $site;
     }
 
-    return $this->current();
+    return $this->site;
   }
 
   public function current()
