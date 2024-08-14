@@ -1,7 +1,7 @@
 {
   "name": "neon/site",
   "description": "Neon CMS' website handler.",
-  "version": "3.0.0-alpha-8",
+  "version": "3.0.0-alpha-9",
   "type": "library",
   "license": "MIT",
   "authors": [
@@ -12,6 +12,10 @@
     {
       "name": "Egon Stefán",
       "email": "egon.stefan@elementary-interactive.com"
+    },
+    {
+      "name": "Attila Kovács",
+      "email": "attila.kovacs@elementary-interactive.com"
     }
   ],
   "autoload": {
