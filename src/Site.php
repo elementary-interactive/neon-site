@@ -61,9 +61,9 @@ class Site
     return $this->sites->filter(function ($item, $key) use ($host) {
       $need     = false;
 
-      $match = Str::of($host)->match($item->getDomainPattern());
+      $match = Str::of($host)->matchAll($item->getDomainPattern());
 
-      if ($host == $match) {
+      if ($match->count() >= 1) {
         $need = true;
       }
 
@@ -113,6 +113,7 @@ class Site
 
   public function findOrDefault(Request $request)
   {
+    $site = null;
     $available_sites = $this->findByDomain($request->host());
 
     if ($available_sites->count() > 1) {
