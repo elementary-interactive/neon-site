@@ -6,5 +6,5 @@ interface Site
 {
   public function getDomainPattern(): string;
 
-  public function getPrefixPattern(): string;
+  public function getPrefixPattern(): string|null;
 }

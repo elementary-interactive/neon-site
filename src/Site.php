@@ -2,12 +2,11 @@
 
 namespace Neon\Site;
 
-use Illuminate\Database\Console\DumpCommand;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
-use Neon\Site\Http\Middleware\SiteMiddleware;
+use Neon\Site\Exceptions\DomainNotSetProperlyException;
 
 class Site
 {
@@ -64,12 +63,12 @@ class Site
 
       $match = Str::of($host)->match($item->getDomainPattern());
 
-      if ($host == $match && $item->locale == app()->getLocale()) {
+      if ($host == $match) {
         $need = true;
       }
 
       return $need;
-    })?->first();
+    });
   }
 
   /** 
@@ -83,19 +82,29 @@ class Site
    * 
    * @see doc
    */
-  public function findByPrefix(string|null $prefix = null)
+  public function findByPrefix(string|null $prefix = null, Collection|null $filtered_sites = null)
   {
-    return $this->sites->filter(function ($item, $key) use ($prefix) {
+    if (!$filtered_sites)
+    {
+      $filtered_sites = $this->sites;
+    }
+    
+    return $filtered_sites->filter(function ($item, $key) use ($prefix) {
       $need     = false;
 
       /** Clean it up...
        */
       $prefix = Str::of($prefix)->trim('/');
 
-      $match = Str::of($prefix)->match($item->getPrefixPattern());
+      /** Check only prefixes are set.
+       */
+      if ($item->getPrefixPattern())
+      {
+        $match = Str::of($prefix)->matchAll($item->getPrefixPattern());
 
-      if ($prefix == $match && $item->locale == app()->getLocale()) {
-        $need = true;
+        if ($match->count() >= 1) {
+          $need = true;
+        }
       }
 
       return $need;
@@ -104,20 +113,36 @@ class Site
 
   public function findOrDefault(Request $request)
   {
-    $site = $this->findByDomain($request->host()) ?: $this->findByPrefix(Route::current()->getPrefix());
+    $available_sites = $this->findByDomain($request->host());
+
+    if ($available_sites->count() > 1) {
+      /** If more domanis matching, we try to get site by prefix.
+       */
+      $site = $this->findByPrefix($request->segment(1), $available_sites);
+    } elseif ($available_sites->count() == 1) {
+      $site = $available_sites->first();
+    }
 
     /** If site can't find by domain neither prefix, we just getting the default
      * one. Locale also should match.
      */
     if (is_null($site)) {
       $this->site = $this->sites->filter(function ($item, $key) {
-        if ($item->default === true && $item->locale == app()->getLocale()) {
+        if ($item->default === true) {
           return true;
         }
       })->first();
     } else {
       $this->site = $site;
     }
+
+    if (!$this->site) {
+      throw new DomainNotSetProperlyException($request->host());
+    }
+
+    /** Set locale.
+     */
+    app()->setLocale($site->locale);
 
     return $this->site;
   }

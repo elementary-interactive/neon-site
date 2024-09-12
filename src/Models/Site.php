@@ -85,10 +85,13 @@ class Site extends Model implements SiteInterface
    * 
    * @return string
    */
-  public function getPrefixPattern(): string
+  public function getPrefixPattern(): string|null
   {
-    $prefixes = (is_array($this->prefixes)  && !empty($this->prefixes)) ? implode('|', $this->prefixes) : $this->prefixes;
-    if (!Str::of($prefixes)->startsWith('/')) {
+    $prefixes = (is_array($this->prefixes)  && !empty($this->prefixes)) ? implode('|', $this->prefixes) : null;
+    
+    /** Create regular expression if prefixes were able to collact to a string.
+     */
+    if ($prefixes && !Str::of($prefixes)->startsWith('/')) {
       $prefixes = "/{$prefixes}/im";
     }
 

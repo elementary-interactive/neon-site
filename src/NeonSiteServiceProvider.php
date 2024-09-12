@@ -12,7 +12,7 @@ use Spatie\LaravelPackageTools\Commands\InstallCommand;
 
 class NeonSiteServiceProvider extends PackageServiceProvider
 {
-  const VERSION = '3.0.0-alpha-9';
+  const VERSION = '3.0.0-alpha-10';
 
   public function configurePackage(Package $package): void
   {
