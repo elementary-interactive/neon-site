@@ -129,7 +129,7 @@ class Site
      */
     if (is_null($site)) {
       $this->site = $this->sites->filter(function ($item, $key) {
-        if ($item->default === true) {
+        if ($item->is_default == true) {
           return true;
         }
       })->first();
@@ -143,7 +143,7 @@ class Site
 
     /** Set locale.
      */
-    app()->setLocale($site->locale);
+    app()->setLocale($this->site->locale);
 
     return $this->site;
   }
