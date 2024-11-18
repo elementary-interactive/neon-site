@@ -92,7 +92,7 @@ class Site extends Model implements SiteInterface
     /** Create regular expression if prefixes were able to collact to a string.
      */
     if ($prefixes && !Str::of($prefixes)->startsWith('/')) {
-      $prefixes = "/{$prefixes}/im";
+      $prefixes = "/^{$prefixes}/im";
     }
 
     return $prefixes;
